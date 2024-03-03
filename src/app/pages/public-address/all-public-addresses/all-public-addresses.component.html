@@ -1,0 +1,32 @@
+<h2>
+    Public Addresses
+</h2>
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of allPublicAddress">
+            <td>{{item.name}}</td>
+            <td>{{item.address}}</td>
+            <td>{{item.latitude}}</td>
+            <td>{{item.longitude}}</td>
+        </tr>
+        <tr *ngIf="allPublicAddress.length === 0">
+            <td colspan="4" class="text-center">
+                There is No Public Address
+            </td>
+        </tr>
+        <tr *ngIf="isLoading">
+            <td colspan="4" class="text-center">
+                <div class="spinner-border text-primary"></div>
+            </td>
+        </tr>
+    </tbody>
+</table>

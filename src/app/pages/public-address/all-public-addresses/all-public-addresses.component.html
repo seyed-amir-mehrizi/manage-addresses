@@ -22,8 +22,14 @@
             <td>{{item.address}}</td>
             <td>{{item.latitude}}</td>
             <td>{{item.longitude}}</td>
-            <td>
-                <button class="btn btn-danger btn-sm" (click)="deletePublicAddress(item)">
+            <td class="text-center">
+                <button class="btn btn-info btn-sm "
+                (click)="editPublicAddress(item.id)"
+                >
+
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-danger btn-sm mx-2" (click)="deletePublicAddress(item)">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                 </button>
             </td>

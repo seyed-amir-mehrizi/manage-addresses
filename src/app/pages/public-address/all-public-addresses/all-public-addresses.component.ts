@@ -51,4 +51,8 @@ export class AllPublicAddressesComponent implements OnInit {
     })
   }
 
+  editPublicAddress(id:number){
+    this.router.navigate(['/register-public-address'], { state: { id } })
+  }
+
 }

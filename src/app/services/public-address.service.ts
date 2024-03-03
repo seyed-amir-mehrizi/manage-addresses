@@ -19,4 +19,11 @@ export class PublicAddressService {
   deletePublicAddress(id: number) {
     return this.http.delete(`http://localhost:3000/public-addresses/${id}`)
   }
+  getPublicAddressById(id: number) {
+    return this.http.get<PublicAddress>(`http://localhost:3000/public-addresses/${id}`);
+
+  }
+  editPublicAddressById(command: any) {
+    return this.http.put(`http://localhost:3000/public-addresses/${command.id}`, command);
+  }
 }

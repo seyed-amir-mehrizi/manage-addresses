@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { PublicAddressService } from 'src/app/services/public-address.service';
 import { PublicAddress } from 'src/app/shared/model/model';
@@ -11,7 +12,11 @@ import { PublicAddress } from 'src/app/shared/model/model';
 export class AllPublicAddressesComponent implements OnInit {
   allPublicAddress: PublicAddress[] = [];
   isLoading = false;
-  constructor(private publicServiceAddress: PublicAddressService) {
+  constructor(
+    private publicServiceAddress: PublicAddressService,
+    private router : Router
+    
+    ) {
 
   }
   ngOnInit(): void {
@@ -30,6 +35,10 @@ export class AllPublicAddressesComponent implements OnInit {
           // Handle errors here
         }
       })
+  }
+
+  registerNewAddress(){
+    this.router.navigateByUrl('/register-public-address')
   }
 
 }

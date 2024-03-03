@@ -13,4 +13,7 @@ export class PublicAddressService {
   getAllPublicAddresses(){
     return this.http.get<PublicAddress[]>('http://localhost:3000/public-addresses');
   }
+  registerPublicAddress(command:any){
+    return this.http.post('http://localhost:3000/public-addresses' , command);
+  }
 }

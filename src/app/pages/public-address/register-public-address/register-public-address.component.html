@@ -1,0 +1,39 @@
+<div class="container mt-3">
+    <h2>Public Address Form</h2>
+    <form *ngIf="publicAddressForm" [formGroup]="publicAddressForm">
+        <div class="row">
+            <div class="mb-3 col-md-6 col-sm-12">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter name" name="name"
+                    formControlName="name"
+                    [ngClass]="{ 'error-validation': isPublicAddressFormSubmit && publicAddressFormSubmitted.name.errors }">
+            </div>
+            <div class="mb-3 col-md-12">
+                <label for="address">Address:</label>
+                <textarea type="text" class="form-control" id="address" placeholder="Enter Address" name="address"
+                    formControlName="address"
+                    [ngClass]="{ 'error-validation': isPublicAddressFormSubmit && publicAddressFormSubmitted.address.errors }">
+                </textarea>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-6 col-sm-12">
+                    <label for="Latitude">Latitude:</label>
+                    <input type="text" class="form-control" id="Latitude" placeholder="Enter Latitude" name="Latitude"
+                        (keypress)="numberOnly($event)" formControlName="latitude"
+                        [ngClass]="{ 'error-validation': isPublicAddressFormSubmit && publicAddressFormSubmitted.latitude.errors }">
+                </div>
+                <div class="mb-3 col-md-6 col-sm-12">
+                    <label for="longitude">Longitude:</label>
+                    <input type="text" class="form-control" id="longitude" placeholder="Enter Longitude"
+                        name="longitude" (keypress)="numberOnly($event)" formControlName="longitude"
+                        [ngClass]="{ 'error-validation': isPublicAddressFormSubmit && publicAddressFormSubmitted.longitude.errors }">
+                </div>
+            </div>
+
+        </div>
+        <button type="button" class="btn btn-primary" (click)="registerPublicAddressForm()">
+            Register
+            <span *ngIf="isLoadingBtn" class="spinner-border spinner-border-sm"></span>
+        </button>
+    </form>
+</div>

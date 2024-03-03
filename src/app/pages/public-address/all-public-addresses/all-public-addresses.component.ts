@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
 import { PublicAddressService } from 'src/app/services/public-address.service';
 import { PublicAddress } from 'src/app/shared/model/model';
@@ -14,7 +15,8 @@ export class AllPublicAddressesComponent implements OnInit {
   isLoading = false;
   constructor(
     private publicServiceAddress: PublicAddressService,
-    private router : Router
+    private router : Router,
+    private toastr: ToastrService,
     
     ) {
 
@@ -39,6 +41,14 @@ export class AllPublicAddressesComponent implements OnInit {
 
   registerNewAddress(){
     this.router.navigateByUrl('/register-public-address')
+  }
+
+  deletePublicAddress(item:PublicAddress){
+    this.publicServiceAddress.deletePublicAddress(item.id)
+    .subscribe((res)=>{
+      this.toastr.success(`The ${item.name} Address is Deleted Successfully`);
+      this.getAllPublicService();
+    })
   }
 
 }

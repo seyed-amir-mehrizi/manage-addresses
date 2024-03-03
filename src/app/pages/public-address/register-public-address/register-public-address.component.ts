@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { PublicAddressService } from 'src/app/services/public-address.service';
 
 @Component({
@@ -15,6 +16,8 @@ export class RegisterPublicAddressComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private publicServiceAddress: PublicAddressService,
+    private toastr: ToastrService,
+
   ) {
 
   }
@@ -52,8 +55,9 @@ export class RegisterPublicAddressComponent implements OnInit {
     this.publicServiceAddress.registerPublicAddress(command)
       .subscribe((res) => {
         if (res)
-          console.log("res : ", res);
-        this.isLoadingBtn = false;
+          this.isLoadingBtn = false;
+        this.publicAddressForm?.reset();
+        this.toastr.success(`The ${command.name} Address is Added Successfully`);
 
       })
 

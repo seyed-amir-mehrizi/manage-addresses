@@ -29,3 +29,11 @@ export interface PublicAddress {
     name:string;
     phoneNumber:string
   }
+
+  export interface FavoriteAddress {
+    id: number;
+    name: string;
+    address: string;
+    latitude: number;
+    longitude: number;
+  }

@@ -10,6 +10,11 @@
                         (click)="isMenuCollapsed = true">Public
                         Addresses</a>
                 </li>
+                <li *ngIf="this.userInfo" class="nav-item active">
+                    <a class="nav-link" routerLink="/favorite-address" routerLinkActive="is-active"
+                        (click)="isMenuCollapsed = true">Favorite
+                        Addresses</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/register" routerLinkActive="is-active"
                         (click)="isMenuCollapsed = true">Register</a>

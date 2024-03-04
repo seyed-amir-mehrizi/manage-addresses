@@ -5,6 +5,7 @@ import { RegisterPublicAddressComponent } from './pages/public-address/register-
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { UserInfoComponent } from './pages/user-info/user-info.component';
+import { AllFavoriteAddressComponent } from './pages/favorite-address/all-favorite-address/all-favorite-address.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/public-address', pathMatch: 'full' },
@@ -12,7 +13,9 @@ const routes: Routes = [
   { path: 'register-public-address', component: RegisterPublicAddressComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'user-info', component: UserInfoComponent }
+  { path: 'user-info', component: UserInfoComponent },
+  { path: 'favorite-address', component: AllFavoriteAddressComponent },
+
 ];
 
 @NgModule({

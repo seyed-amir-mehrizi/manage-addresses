@@ -15,6 +15,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BaseUrlInterceptor } from './core/baseUrl.interceptor';
 import { UserInfoComponent } from './pages/user-info/user-info.component';
+import { AllFavoriteAddressComponent } from './pages/favorite-address/all-favorite-address/all-favorite-address.component';
+import { RegisterFavoriteAddressComponent } from './pages/favorite-address/register-favorite-address/register-favorite-address.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +26,8 @@ import { UserInfoComponent } from './pages/user-info/user-info.component';
     RegisterComponent,
     LoginComponent,
     UserInfoComponent,
+    AllFavoriteAddressComponent,
+    RegisterFavoriteAddressComponent,
   ],
   imports: [
     BrowserModule,

@@ -26,7 +26,7 @@ export class BaseUrlInterceptor implements HttpInterceptor {
         let modifiedRequest;
         let token = localStorage.getItem('token')
         if (token) {
-            if (request.url.includes('/users')) {
+            if (request.url.includes('/users') || request.url.includes('/favorite-addresses')) {
                 modifiedRequest = request.clone({
                     setHeaders: {
                         'Authorization': `Bearer ${token}`,

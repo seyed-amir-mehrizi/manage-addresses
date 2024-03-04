@@ -12,6 +12,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegisterComponent } from './pages/register/register.component';
+import { LoginComponent } from './pages/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,6 +20,7 @@ import { RegisterComponent } from './pages/register/register.component';
     RegisterPublicAddressComponent,
     NavbarComponent,
     RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

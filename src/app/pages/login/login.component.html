@@ -1,0 +1,20 @@
+<div class="continer">
+    <h2>Login Form</h2>
+    <form *ngIf="LoginForm " [formGroup]="LoginForm" class="d-flex align-items-center justify-content-center flex-column">
+        <div class="mb-3 mt-3 col-md-6">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"
+                formControlName="email"
+                [ngClass]="{ 'error-validation': isLoginFormSubmit && loginFormSubmitted.email.errors }">
+        </div>
+        <div class="mb-3 col-md-6">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" class="form-control" id="password" placeholder="Enter password" name="password"
+                formControlName="password"
+                [ngClass]="{ 'error-validation': isLoginFormSubmit && loginFormSubmitted.password.errors }">
+        </div>
+        <button type="button" class="btn btn-primary"
+        (click)="login()"
+        >Login</button>
+    </form>
+</div>

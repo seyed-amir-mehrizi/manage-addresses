@@ -12,3 +12,8 @@ export interface PublicAddress {
     email: string;
     phoneNumber: string;
   }
+
+  export interface Login{
+    password: string;
+    email: string;
+  }

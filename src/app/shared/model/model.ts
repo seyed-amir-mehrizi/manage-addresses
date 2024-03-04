@@ -5,3 +5,10 @@ export interface PublicAddress {
     latitude: number;
     longitude: number;
   }
+
+  export interface Register{
+    name: string;
+    password: string;
+    email: string;
+    phoneNumber: string;
+  }

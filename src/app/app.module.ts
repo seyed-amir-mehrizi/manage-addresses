@@ -9,11 +9,16 @@ import { RegisterPublicAddressComponent } from './pages/public-address/register-
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { RegisterComponent } from './pages/register/register.component';
 @NgModule({
   declarations: [
     AppComponent,
     AllPublicAddressesComponent,
     RegisterPublicAddressComponent,
+    NavbarComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +31,8 @@ import { ToastrModule } from 'ngx-toastr';
       positionClass:'toast-top-left',
       timeOut:5000,
       closeButton:true
-    }), // ToastrModule added,
+    }),
+    NgbCollapseModule
     
   ],
   providers: [],

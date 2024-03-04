@@ -1,0 +1,39 @@
+<div class="container mt-3">
+    <h2>Register User Form</h2>
+    <form *ngIf="RegisterForm " [formGroup]="RegisterForm">
+        <div class="row">
+            <div class="mb-3 col-md-6">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"
+                    formControlName="email"
+                    [ngClass]="{ 'error-validation': isRegisterFormSubmit && registerFormSubmitted.email.errors }">
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter password" name="password"
+                    formControlName="password"
+                    [ngClass]="{ 'error-validation': isRegisterFormSubmit && registerFormSubmitted.password.errors }">
+            </div>
+            <div class="mb-3 col-md-6 ">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter name" name="name"
+                    formControlName="name"
+                    [ngClass]="{ 'error-validation': isRegisterFormSubmit && registerFormSubmitted.name.errors }">
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" class="form-control" id="phoneNumber" placeholder="Enter Phone Number"
+                    name="phoneNumber" (keypress)="numberOnly($event)" formControlName="phoneNumber"
+                    [ngClass]="{ 'error-validation': isRegisterFormSubmit && registerFormSubmitted.phoneNumber.errors }">
+            </div>
+
+
+        </div>
+        <button type="button" [ngClass]=" addressId ? ' btn btn-info text-white' : ' btn btn-primary'"
+            (click)="registerForm()">
+            Register
+            <span *ngIf="isLoadingBtn" class="spinner-border spinner-border-sm"></span>
+        </button>
+    </form>
+
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   isLoginFormSubmit = false;
   constructor(
     private fb: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ) {
 
   }
@@ -48,8 +50,9 @@ export class LoginComponent implements OnInit {
       .pipe(finalize(() => this.isLoadingBtn = false))
       .subscribe((res) => {
         if (res) {
-          console.log("res : ", res);
-
+          localStorage.setItem('token', res.accessToken);
+          localStorage.setItem('userInfo', JSON.stringify(res.user));
+          window.location.replace('/');
         }
       })
 

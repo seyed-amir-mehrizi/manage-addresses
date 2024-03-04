@@ -17,3 +17,15 @@ export interface PublicAddress {
     password: string;
     email: string;
   }
+
+  export interface LoginData{
+    accessToken:string,
+    user:UserInfo
+  }
+
+  export interface UserInfo{
+    email:string;
+    id:number;
+    name:string;
+    phoneNumber:string
+  }

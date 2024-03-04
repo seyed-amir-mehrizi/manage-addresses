@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Login } from "../shared/model/model";
+import { Login, LoginData } from "../shared/model/model";
 
 
 @Injectable({
@@ -12,6 +12,6 @@ export class LoginService {
     }
 
     login(command: Login) {
-        return this.http.post('http://localhost:3000/login', command);
+        return this.http.post<LoginData>('http://localhost:3000/login', command);
     }
 }

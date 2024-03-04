@@ -14,6 +14,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BaseUrlInterceptor } from './core/baseUrl.interceptor';
+import { UserInfoComponent } from './pages/user-info/user-info.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +23,7 @@ import { BaseUrlInterceptor } from './core/baseUrl.interceptor';
     NavbarComponent,
     RegisterComponent,
     LoginComponent,
+    UserInfoComponent,
   ],
   imports: [
     BrowserModule,

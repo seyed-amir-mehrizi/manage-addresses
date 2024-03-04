@@ -23,11 +23,19 @@ export class BaseUrlInterceptor implements HttpInterceptor {
         console.log("next : ", next);
 
         // Add your logic to modify the request here
-        const modifiedRequest = request.clone({
-            setHeaders: {
-                'Custom-Header': 'header-value',
-            },
-        });
+        let modifiedRequest;
+        let token = localStorage.getItem('token')
+        if (token) {
+            if (request.url.includes('/users')) {
+                modifiedRequest = request.clone({
+                    setHeaders: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+            }
+        } else {
+            modifiedRequest = request;
+        }
         return next.handle(modifiedRequest).pipe(
             map((event: HttpEvent<any>) => {
                 // If the response is an HTTP success (e.g., 200 OK), you can handle it here
@@ -38,7 +46,7 @@ export class BaseUrlInterceptor implements HttpInterceptor {
             }),
             catchError((error: HttpErrorResponse) => {
                 const expectedError = error.status >= 400 && error.status < 500;
-                if(expectedError){
+                if (expectedError) {
                     this.toastr.error(error.error)
                 }
                 return throwError(error);

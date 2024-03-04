@@ -1,0 +1,17 @@
+<h2>User Information Form</h2>
+
+<form *ngIf="userInfoForm " [formGroup]="userInfoForm"
+    class="d-flex align-items-center justify-content-center flex-column">
+    <div class="mb-3 mt-3 col-md-6">
+        <label for="name" class="form-label">Name:</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" formControlName="name"
+            [ngClass]="{ 'error-validation': isUserInfoFormSubmit && userInfoFormSubmitted.name.errors }">
+    </div>
+    <div class="mb-3 col-md-6">
+        <label for="password" class="form-label">Password:</label>
+        <input type="text" class="form-control" id="phoneNumber" placeholder="Enter Phone Number" name="phoneNumber"
+            (keypress)="numberOnly($event)" formControlName="phoneNumber"
+            [ngClass]="{ 'error-validation': isUserInfoFormSubmit && userInfoFormSubmitted.phoneNumber.errors }">
+    </div>
+    <button type="button" class="btn btn-primary" (click)="setUserInfoData()">Confirm</button>
+</form>

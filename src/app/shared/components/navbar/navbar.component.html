@@ -24,7 +24,8 @@
                 </li>
 
             </ul>
-            <div *ngIf="this.userInfo" class="d-flex align-items-center flex-column">
+            <div *ngIf="this.userInfo" class="d-flex align-items-center flex-column cursor-pointer"
+                routerLink="/user-info" [queryParams]="{xyz: userInfo?.id}">
                 <i class="fa fa-user" aria-hidden="true"></i>
                 welcome {{userInfo?.name}}
             </div>

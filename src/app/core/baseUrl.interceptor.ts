@@ -32,6 +32,8 @@ export class BaseUrlInterceptor implements HttpInterceptor {
                         'Authorization': `Bearer ${token}`,
                     },
                 });
+            } else {
+                modifiedRequest = request;
             }
         } else {
             modifiedRequest = request;

@@ -5,7 +5,9 @@
             <label for="email" class="form-label">Email:</label>
             <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"
                 formControlName="email"
-                [ngClass]="{ 'error-validation': isLoginFormSubmit && loginFormSubmitted.email.errors }">
+                [ngClass]="{ 'error-validation': isLoginFormSubmit && loginFormSubmitted.email.errors }"
+                autocomplete="false"
+                >
         </div>
         <div class="mb-3 col-md-6">
             <label for="password" class="form-label">Password:</label>

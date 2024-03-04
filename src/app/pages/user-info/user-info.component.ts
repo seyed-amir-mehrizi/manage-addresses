@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserInfoService } from 'src/app/services/userInfo.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class UserInfoComponent implements OnInit {
     private route: ActivatedRoute,
     private userInfoService: UserInfoService,
     private fb: FormBuilder,
+    private toastr: ToastrService,
 
   ) { }
   ngOnInit(): void {
@@ -46,10 +48,16 @@ export class UserInfoComponent implements OnInit {
   }
 
   setUserInfoData() {
-    this.userInfoService.setUserInfoData(this.userInfo)
+    const command = {
+      ...this.userInfo,
+      name: this.userInfoForm?.value.name,
+      phoneNumber: this.userInfoForm?.value.phoneNumber,
+    }
+    this.userInfoService.setUserInfoData(command)
       .subscribe((res) => {
-        console.log("res : ", res);
-
+        localStorage.setItem('userInfo', JSON.stringify(res));
+        window.location.replace('/');
+        this.toastr.success(`The User Information is Edited Successfully`);
       })
   }
 

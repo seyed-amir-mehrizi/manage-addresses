@@ -6,25 +6,25 @@ import { FavoriteAddress } from '../shared/model/model';
 @Injectable({
   providedIn: 'root'
 })
-export class PublicAddressService {
+export class FavoriteAddressService {
 
   constructor(private http: HttpClient) {
 
   }
-  getAllPublicAddresses() {
+  getAllFavoriteAddresses() {
     return this.http.get<FavoriteAddress[]>('http://localhost:3000/favorite-addresses');
   }
-  registerPublicAddress(command: any) {
+  registerFavoriteAddress(command: any) {
     return this.http.post('http://localhost:3000/favorite-addresses', command);
   }
-  deletePublicAddress(id: number) {
+  deleteFavoriteAddress(id: number) {
     return this.http.delete(`http://localhost:3000/favorite-addresses/${id}`)
   }
-  getPublicAddressById(id: number) {
+  getFavoriteAddressById(id: number) {
     return this.http.get<FavoriteAddress>(`http://localhost:3000/favorite-addresses/${id}`);
 
   }
-  editPublicAddressById(command: any) {
+  editFavoriteAddressById(command: any) {
     return this.http.put(`http://localhost:3000/favorite-addresses/${command.id}`, command);
   }
 }

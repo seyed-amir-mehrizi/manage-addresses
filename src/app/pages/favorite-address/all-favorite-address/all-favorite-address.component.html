@@ -1,1 +1,48 @@
-<p>all-favorite-address works!</p>
+<div class="d-flex align-items-center justify-content-between">
+    <h2>
+        Favorite Addresses
+    </h2>
+    <button class="btn btn-primary" (click)="registerNewAddress()">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+    </button>
+</div>
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of allFavoriteAddress">
+            <td>{{item.name}}</td>
+            <td>{{item.address}}</td>
+            <td>{{item.latitude}}</td>
+            <td>{{item.longitude}}</td>
+            <td class="text-center">
+                <button class="btn btn-info btn-sm "
+                (click)="editFavoriteAddress(item.id)"
+                >
+
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-danger btn-sm mx-2" (click)="deleteFavoriteAddress(item)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="allFavoriteAddress.length === 0">
+            <td colspan="5" class="text-center">
+                There is No Favorite Address
+            </td>
+        </tr>
+        <tr *ngIf="isLoading">
+            <td colspan="5" class="text-center">
+                <div class="spinner-border text-primary"></div>
+            </td>
+        </tr>
+    </tbody>
+</table>

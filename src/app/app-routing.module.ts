@@ -8,6 +8,7 @@ import { UserInfoComponent } from './pages/user-info/user-info.component';
 import { AllFavoriteAddressComponent } from './pages/favorite-address/all-favorite-address/all-favorite-address.component';
 import { AuthGuard } from './core/auth.guard';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { RegisterFavoriteAddressComponent } from './pages/favorite-address/register-favorite-address/register-favorite-address.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/public-address', pathMatch: 'full' },
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'user-info', component: UserInfoComponent, canActivate: [AuthGuard] },
   { path: 'favorite-address', component: AllFavoriteAddressComponent, canActivate: [AuthGuard] },
+  { path: 'register-favorite-address', component: RegisterFavoriteAddressComponent, canActivate: [AuthGuard] },
+
   { path: '**', component: NotFoundComponent }
 
 ];

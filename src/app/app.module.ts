@@ -17,6 +17,7 @@ import { BaseUrlInterceptor } from './core/baseUrl.interceptor';
 import { UserInfoComponent } from './pages/user-info/user-info.component';
 import { AllFavoriteAddressComponent } from './pages/favorite-address/all-favorite-address/all-favorite-address.component';
 import { RegisterFavoriteAddressComponent } from './pages/favorite-address/register-favorite-address/register-favorite-address.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,7 @@ import { RegisterFavoriteAddressComponent } from './pages/favorite-address/regis
     UserInfoComponent,
     AllFavoriteAddressComponent,
     RegisterFavoriteAddressComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

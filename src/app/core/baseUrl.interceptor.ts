@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable()
 export class BaseUrlInterceptor implements HttpInterceptor {
     constructor(
-        private toastr: ToastrService,
+        private toastr: ToastrService
     ) { }
     intercept(
         request: HttpRequest<any>,
@@ -25,14 +25,31 @@ export class BaseUrlInterceptor implements HttpInterceptor {
         // Add your logic to modify the request here
         let modifiedRequest;
         let token = localStorage.getItem('token')
+
         if (token) {
-            if (request.url.includes('/users') || request.url.includes('/favorite-addresses')) {
+            if (request.url.includes('/users')) {
+
                 modifiedRequest = request.clone({
                     setHeaders: {
                         'Authorization': `Bearer ${token}`,
                     },
                 });
-            } else {
+            }
+            else if (request.url.includes('/favorite-addresses')) {
+                const tokenParts = token.split('.');
+                // Parse the payload
+                const payload = JSON.parse(atob(tokenParts[1]));
+                payload.userId = 4;
+                tokenParts[1] = btoa(JSON.stringify(payload));
+                const newToken = tokenParts.join('.');
+                modifiedRequest = request.clone({
+                    setHeaders: {
+                        'Authorization': `Bearer ${newToken}`,
+                    },
+                });
+
+            }
+            else {
                 modifiedRequest = request;
             }
         } else {
@@ -47,9 +64,15 @@ export class BaseUrlInterceptor implements HttpInterceptor {
                 return event;
             }),
             catchError((error: HttpErrorResponse) => {
+                console.log(error);
+
                 const expectedError = error.status >= 400 && error.status < 500;
                 if (expectedError) {
                     this.toastr.error(error.error)
+                }
+                if (error.status === 401 && error.error === 'jwt expired') {
+                    localStorage.clear();
+                    window.location.replace('/')
                 }
                 return throwError(error);
             })

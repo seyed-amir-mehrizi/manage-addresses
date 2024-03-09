@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { finalize, map } from 'rxjs';
 import { FavoriteAddressService } from 'src/app/services/favorite-address.service';
@@ -20,21 +21,25 @@ export class RegisterFavoriteAddressComponent implements OnInit {
   address = '';
   latitude;
   longitude;
-
+  addressId;
 
   constructor(
     private fb: FormBuilder,
     private favoriteAddressService: FavoriteAddressService,
     private toastr: ToastrService,
+    private router: Router,
 
   ) {
-
+    this.addressId = this.router.getCurrentNavigation()?.extras.state;
   }
   ngOnInit(): void {
     this.initForm();
     const userInfo = localStorage.getItem('userInfo');
     if (userInfo !== null) {
       this.userInfo = JSON.parse(userInfo);
+    }
+    if (this.addressId) {
+      this.getFavoriteAddressById();
     }
   }
 
@@ -57,18 +62,51 @@ export class RegisterFavoriteAddressComponent implements OnInit {
       return;
     }
     const command = {
+      id: this.addressId ? this.addressId['id'] : null,
       userId: this.userInfo.id,
       name: this.favoriteAddressForm?.value.name,
       address: this.favoriteAddressForm?.value.address,
       latitude: this.latitude,
       longitude: this.longitude
     }
-    this.favoriteAddressService.registerFavoriteAddress(command)
-      .pipe(finalize(() => this.isLoadingBtn = false))
-      .subscribe((res: any) => {
-        this.toastr.success(`The ${command.name} Address is Added Successfully`);
-        this.favoriteAddressForm?.reset();
+    if (!this.addressId) {
+      delete command.id;
+      this.favoriteAddressService.registerFavoriteAddress(command)
+        .pipe(finalize(() => this.isLoadingBtn = false))
+        .subscribe((res: any) => {
+          this.toastr.success(`The ${command.name} Address is Added Successfully`);
+          this.favoriteAddressForm?.reset();
+        })
+    }else{
+      this.favoriteAddressService.editFavoriteAddressById(command)
+      .subscribe((res) => {
+        if (res) {
+          this.isLoadingBtn = false;
+          this.toastr.success(`The ${command.name} Address is Edited Successfully`);
+          this.router.navigate(['/favorite-address'])
+        }
       })
+    }
+  }
+
+  getFavoriteAddressById() {
+    this.favoriteAddressService.getFavoriteAddressById(this.addressId.id)
+      .subscribe({
+        next: (res: any) => {
+          this.setFavoriteAddressFromValue(res)
+        },
+        error: (err) => {
+
+        }
+      })
+  }
+  setFavoriteAddressFromValue(res: any) {
+    this.favoriteAddressForm?.patchValue({
+      name: res.name,
+      address: res.address,
+      latitude: this.latitude,
+      longitude: this.longitude,
+    })
   }
 
   blurAddressInput(e) {

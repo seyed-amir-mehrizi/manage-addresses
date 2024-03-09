@@ -44,7 +44,6 @@ export class BaseUrlInterceptor implements HttpInterceptor {
                 return event;
             }),
             catchError((error: HttpErrorResponse) => {
-                console.log(error);
                 const expectedError = error.status >= 400 && error.status < 500;
                 if (expectedError) {
                     this.toastr.error(error.error)

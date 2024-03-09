@@ -56,10 +56,8 @@ export class RegisterComponent implements OnInit {
       .pipe(finalize(() => this.isLoadingBtn = false))
       .subscribe((res) => {
         if (res) {
-          console.log("res : ", res);
-
-          // this.RegisterForm?.reset();
-          // this.toastr.success(`The ${command.name} User is Added Successfully`);
+          this.RegisterForm?.reset();
+          this.toastr.success(`The ${command.name} User is Added Successfully`);
         }
       })
   }

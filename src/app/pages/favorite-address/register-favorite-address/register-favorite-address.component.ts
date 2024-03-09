@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { map } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { finalize, map } from 'rxjs';
 import { FavoriteAddressService } from 'src/app/services/favorite-address.service';
+import { UserInfo } from 'src/app/shared/model/model';
 
 @Component({
   selector: 'app-register-favorite-address',
@@ -13,6 +15,7 @@ export class RegisterFavoriteAddressComponent implements OnInit {
   isFavoriteFormSubmitted = false;
   isLoadingBtn = false;
   addressType: number;
+  userInfo: UserInfo;
   isTextualAddress = false;
   address = '';
   latitude;
@@ -21,20 +24,24 @@ export class RegisterFavoriteAddressComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private favoriteAddressService: FavoriteAddressService
+    private favoriteAddressService: FavoriteAddressService,
+    private toastr: ToastrService,
+
   ) {
 
   }
   ngOnInit(): void {
     this.initForm();
+    const userInfo = localStorage.getItem('userInfo');
+    if (userInfo !== null) {
+      this.userInfo = JSON.parse(userInfo);
+    }
   }
 
   initForm() {
     this.favoriteAddressForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
-      address: this.addressType === 1 ? [this.address, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]] : [],
-      latitude: [this.addressType === 1 ? this.latitude : '', Validators.required],
-      longitude: [this.addressType === 1 ? this.longitude : '', Validators.required],
+      address: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
     })
   }
 
@@ -49,28 +56,32 @@ export class RegisterFavoriteAddressComponent implements OnInit {
       this.isLoadingBtn = false;
       return;
     }
-  }
-
-  selectAddressType(e) {
-    this.addressType = parseInt(e.target.value);
-    this.isTextualAddress = this.addressType === 1 ? true : false;
-    this.initForm();
-  }
-
-  leaveAddressInput(e) {
-    this.favoriteAddressService.getAddressDetailsByText(e.target.value)
-      // .pipe(map((data: any) => {
-      //   return {
-      //     longitude: data[0].lon,
-      //     latitude: data[0].lat
-      //   }
-      // }))
+    const command = {
+      userId: this.userInfo.id,
+      name: this.favoriteAddressForm?.value.name,
+      address: this.favoriteAddressForm?.value.address,
+      latitude: this.latitude,
+      longitude: this.longitude
+    }
+    this.favoriteAddressService.registerFavoriteAddress(command)
+      .pipe(finalize(() => this.isLoadingBtn = false))
       .subscribe((res: any) => {
-        console.log("res : ", res);
-        // this.longitude = res.longitude;
-        // this.latitude = res.latitude;
-        
+        this.toastr.success(`The ${command.name} Address is Added Successfully`);
+        this.favoriteAddressForm?.reset();
+      })
+  }
 
+  blurAddressInput(e) {
+    this.favoriteAddressService.getAddressDetailsByText(e.target.value)
+      .subscribe((res: any) => {
+        if (res && res.length > 0) {
+          this.longitude = res[0].lon;
+          this.latitude = res[0].lat;
+        } else {
+          this.toastr.error(`The ${e.target.value} Address is not Valid!`);
+          this.favoriteAddressForm?.reset();
+
+        }
       })
   }
 

@@ -18,6 +18,7 @@ export class RegisterFavoriteAddressComponent implements OnInit {
   addressType: number;
   userInfo: UserInfo;
   isTextualAddress = false;
+  hasSearchAddressLoading = false;
   address = '';
   latitude;
   longitude;
@@ -61,6 +62,7 @@ export class RegisterFavoriteAddressComponent implements OnInit {
       this.isLoadingBtn = false;
       return;
     }
+    
     const command = {
       id: this.addressId ? this.addressId['id'] : null,
       userId: this.userInfo.id,
@@ -77,15 +79,16 @@ export class RegisterFavoriteAddressComponent implements OnInit {
           this.toastr.success(`The ${command.name} Address is Added Successfully`);
           this.favoriteAddressForm?.reset();
         })
-    }else{
+    } else {
       this.favoriteAddressService.editFavoriteAddressById(command)
-      .subscribe((res) => {
-        if (res) {
-          this.isLoadingBtn = false;
-          this.toastr.success(`The ${command.name} Address is Edited Successfully`);
-          this.router.navigate(['/favorite-address'])
-        }
-      })
+        .pipe(finalize(() => this.isLoadingBtn = false))
+        .subscribe((res) => {
+          if (res) {
+            this.isLoadingBtn = false;
+            this.toastr.success(`The ${command.name} Address is Edited Successfully`);
+            this.router.navigate(['/favorite-address'])
+          }
+        })
     }
   }
 
@@ -110,7 +113,9 @@ export class RegisterFavoriteAddressComponent implements OnInit {
   }
 
   blurAddressInput(e) {
+    this.hasSearchAddressLoading = true
     this.favoriteAddressService.getAddressDetailsByText(e.target.value)
+      .pipe(finalize(() => this.hasSearchAddressLoading = false))
       .subscribe((res: any) => {
         if (res && res.length > 0) {
           this.longitude = res[0].lon;

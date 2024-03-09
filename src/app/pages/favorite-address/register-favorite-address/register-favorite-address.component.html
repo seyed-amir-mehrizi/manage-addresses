@@ -1,24 +1,31 @@
 <div class="container mt-3">
     <h2>Favorite Address Form</h2>
-    <form *ngIf="favoriteAddressForm" [formGroup]="favoriteAddressForm">
-        <div class="row">
-            <div class="mb-3 col-md-6 col-sm-12">
-                <label for="name">Name:</label>
-                <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter name"
-                    name="name"
-                    [ngClass]="{ 'error-validation': isFavoriteFormSubmitted && favoriteAddressFormSubmitted.name.errors }" />
+    <div *ngIf="!hasSearchAddressLoading;else displayLoading">
+        <form *ngIf="favoriteAddressForm" [formGroup]="favoriteAddressForm">
+            <div class="row">
+                <div class="mb-3 col-md-6 col-sm-12">
+                    <label for="name">Name:</label>
+                    <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter name"
+                        name="name"
+                        [ngClass]="{ 'error-validation': isFavoriteFormSubmitted && favoriteAddressFormSubmitted.name.errors }" />
+                </div>
+                <div class="mb-3 col-md-12 col-sm-12">
+                    <label for="address">Address : </label>
+                    <textarea name="address" id="address" class="form-control" formControlName="address"
+                        [ngClass]="{'error-validation': isFavoriteFormSubmitted && favoriteAddressFormSubmitted.address.errors}"
+                        (blur)="blurAddressInput($event)"></textarea>
+                </div>
+                <button type="button" [ngClass]=" addressId ? ' btn btn-info text-white w-25' : ' btn btn-primary w-25'"
+                    (click)="registerFavoriteAddressForm()">
+                    {{addressId ? 'Edit' : 'Register'}}
+                    <span *ngIf="isLoadingBtn" class="spinner-border spinner-border-sm"></span>
+                </button>
             </div>
-            <div class="mb-3 col-md-6 col-sm-12">
-                <label for="address">Address : </label>
-                <textarea name="address" id="address" class="form-control" formControlName="address"
-                    [ngClass]="{'error-validation': isFavoriteFormSubmitted && favoriteAddressFormSubmitted.address.errors}"
-                    (blur)="blurAddressInput($event)"></textarea>
-            </div>
-            <button type="button" [ngClass]=" addressId ? ' btn btn-info text-white' : ' btn btn-primary'"
-                (click)="registerFavoriteAddressForm()">
-                {{addressId ? 'Edit' : 'Register'}}
-                <span *ngIf="isLoadingBtn" class="spinner-border spinner-border-sm"></span>
-            </button>
+        </form>
+    </div>
+    <ng-template #displayLoading>
+        <div class="h-100 w-100 d-flex align-items-center justify-content-center">
+            <div class="spinner-grow text-primary"></div>
         </div>
-    </form>
+    </ng-template>
 </div>

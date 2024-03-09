@@ -1,1 +1,53 @@
-<p>register-favorite-address works!</p>
+<div class="container mt-3">
+    <h2>Favorite Address Form</h2>
+    <form *ngIf="favoriteAddressForm" [formGroup]="favoriteAddressForm">
+        <div class="row">
+            <div class="mb-3 col-md-6 col-sm-12">
+                <label for="name">Name:</label>
+                <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter name"
+                    name="name"
+                    [ngClass]="{ 'error-validation': isFavoriteFormSubmitted && favoriteAddressFormSubmitted.name.errors }" />
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-6 col-sm-12">
+                    <label for="addressType">Address Type: </label>
+                    <select class="form-select" (change)="selectAddressType($event)" name="addressType"
+                        id="addressType">
+                        <option></option>
+                        <option value="1">Address</option>
+                        <option value="2">Coordinate</option>
+                    </select>
+                </div>
+            </div>
+            <div *ngIf="isTextualAddress" class="mb-3 col-md-6 col-sm-12">
+                <label for="address">Address : </label>
+                <textarea name="address" id="address" class="form-control" formControlName="address"
+                    [ngClass]="{'error-validation': isFavoriteFormSubmitted && favoriteAddressFormSubmitted.address.errors}"
+                    (blur)="leaveAddressInput($event)"></textarea>
+            </div>
+            <div *ngIf="isTextualAddress" class="row">
+                <div class="mb-3 col-md-6 col-sm-12">
+                    <label for="Latitude">Latitude:</label>
+                    <input type="text" class="form-control" id="Latitude" placeholder="Enter Latitude" name="Latitude"
+                        (keypress)="numberOnly($event)" formControlName="latitude"
+                        [ngClass]="{ 'error-validation': isFavoriteFormSubmitted && favoriteAddressFormSubmitted.latitude.errors }"
+                        disabled="isTextualAddress"
+                        >
+                </div>
+                <div class="mb-3 col-md-6 col-sm-12">
+                    <label for="longitude">Longitude:</label>
+                    <input type="text" class="form-control" id="longitude" placeholder="Enter Longitude"
+                        name="longitude" (keypress)="numberOnly($event)" formControlName="longitude"
+                        [ngClass]="{ 'error-validation': isFavoriteFormSubmitted && favoriteAddressFormSubmitted.longitude.errors }"
+                        disabled="isTextualAddress"
+                        
+                        >
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="registerFavoriteAddressForm()">
+                Register
+                <span *ngIf="isLoadingBtn" class="spinner-border spinner-border-sm"></span>
+            </button>
+        </div>
+    </form>
+</div>

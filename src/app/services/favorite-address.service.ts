@@ -27,4 +27,7 @@ export class FavoriteAddressService {
   editFavoriteAddressById(command: any) {
     return this.http.put(`http://localhost:3000/favorite-addresses/${command.id}`, command);
   }
+  getAddressDetailsByText(command:string){
+    return this.http.get(`https://nominatim.openstreetmap.org/search?addressdetails=1&q=${command}&format=jsonv2&limit=1`)
+  }
 }
